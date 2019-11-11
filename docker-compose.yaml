@@ -19,3 +19,5 @@ services:
       - "GRPC_HOST_ADDR=grpc-server:6666"
     ports:
       - "8888:8888"
+    depends_on:
+      - grpc-server

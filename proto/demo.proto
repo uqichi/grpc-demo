@@ -7,9 +7,9 @@ import "google/protobuf/timestamp.proto";
 /* Sample service for demo use */
 service DemoService {
     // Get user object
-    rpc GetUser(GetUserRequest) returns (GetUserResponse);
+    rpc GetUser(GetUserRequest) returns (UserResponse);
     // Create user object
-    rpc CreateUser(CreateUserRequest) returns (CreateUserResponse);
+    rpc CreateUser(CreateUserRequest) returns (UserResponse);
 }
 
 /**
@@ -17,15 +17,6 @@ service DemoService {
 */
 message GetUserRequest {
     string id = 1; // User id
-}
-
-/**
-* Represents get-user response.
-*/
-message GetUserResponse {
-    string                    name    = 1; // User name
-    string                    house   = 2; // Use house
-    google.protobuf.Timestamp created = 3; // User creation time
 }
 
 /**
@@ -37,10 +28,11 @@ message CreateUserRequest {
 }
 
 /**
-* Represents create-user response.
+* Represents user response.
 */
-message CreateUserResponse {
-    string                    id      = 1; // Generated user id
-    string                    house   = 2; // Use house
-    google.protobuf.Timestamp created = 3; // User creation time
+message UserResponse {
+    string                    id      = 1; // User id
+    string                    name    = 2; // User name
+    string                    house   = 3; // Use house
+    google.protobuf.Timestamp created = 4; // User creation time
 }

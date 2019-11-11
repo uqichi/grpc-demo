@@ -13,9 +13,7 @@ import (
 	"github.com/golang/protobuf/ptypes"
 )
 
-type demoService struct {
-	m sync.Map
-}
+type demoService struct{}
 
 type house string
 
@@ -33,6 +31,8 @@ var houses = map[int]house{
 	3: Slytherin,
 }
 
+var mdb = sync.Map{}
+
 type user struct {
 	id      string
 	name    string
@@ -41,11 +41,11 @@ type user struct {
 }
 
 func newDemoService() *demoService {
-	return &demoService{m: sync.Map{}}
+	return &demoService{}
 }
 
-func (svc demoService) GetUser(ctx context.Context, req *proto.GetUserRequest) (*proto.GetUserResponse, error) {
-	load, ok := svc.m.Load(req.Id)
+func (svc demoService) GetUser(ctx context.Context, req *proto.GetUserRequest) (*proto.UserResponse, error) {
+	load, ok := mdb.Load(req.Id)
 	if !ok {
 		return nil, errors.New("user not found")
 	}
@@ -54,7 +54,8 @@ func (svc demoService) GetUser(ctx context.Context, req *proto.GetUserRequest) (
 	if err != nil {
 		return nil, err
 	}
-	res := &proto.GetUserResponse{
+	res := &proto.UserResponse{
+		Id:      u.id,
 		Name:    u.name,
 		House:   string(u.house),
 		Created: ts,
@@ -62,7 +63,7 @@ func (svc demoService) GetUser(ctx context.Context, req *proto.GetUserRequest) (
 	return res, nil
 }
 
-func (svc demoService) CreateUser(ctx context.Context, req *proto.CreateUserRequest) (*proto.CreateUserResponse, error) {
+func (svc demoService) CreateUser(ctx context.Context, req *proto.CreateUserRequest) (*proto.UserResponse, error) {
 	genID := uuid.New()
 	userHouse := randomHouse()
 	if req.House != "" {
@@ -74,7 +75,7 @@ func (svc demoService) CreateUser(ctx context.Context, req *proto.CreateUserRequ
 		house:   userHouse,
 		created: time.Now(),
 	}
-	_, loaded := svc.m.LoadOrStore(genID.String(), u)
+	_, loaded := mdb.LoadOrStore(genID.String(), u)
 	if loaded {
 		return nil, errors.New("user id already exists")
 	}
@@ -82,8 +83,9 @@ func (svc demoService) CreateUser(ctx context.Context, req *proto.CreateUserRequ
 	if err != nil {
 		return nil, err
 	}
-	res := &proto.CreateUserResponse{
+	res := &proto.UserResponse{
 		Id:      u.id,
+		Name:    u.name,
 		House:   string(u.house),
 		Created: t,
 	}

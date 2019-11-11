@@ -2,7 +2,6 @@ package main
 
 import (
 	"encoding/json"
-	"fmt"
 	"io/ioutil"
 	"net/http"
 	"time"
@@ -27,7 +26,9 @@ type handler struct {
 func (h *handler) getUserHandler(w http.ResponseWriter, r *http.Request) {
 	vars := mux.Vars(r)
 
-	res, err := h.cli.GetUser(r.Context(), &proto.GetUserRequest{Id: vars["uid"]})
+	res, err := h.cli.GetUser(r.Context(), &proto.GetUserRequest{
+		Id: vars["uid"],
+	})
 	if err != nil {
 		http.Error(w, err.Error(), 500)
 		return
@@ -38,7 +39,9 @@ func (h *handler) getUserHandler(w http.ResponseWriter, r *http.Request) {
 		http.Error(w, err.Error(), 500)
 	}
 	user := User{
+		ID:      res.Id,
 		Name:    res.Name,
+		House:   res.House,
 		Created: ts,
 	}
 
@@ -75,6 +78,22 @@ func (h *handler) createUserHandler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
+	t, err := ptypes.Timestamp(res.Created)
+	if err != nil {
+		http.Error(w, err.Error(), 500)
+		return
+	}
+
+	user.ID = res.Id
+	user.House = res.House
+	user.Created = t
+
+	output, err := json.Marshal(user)
+	if err != nil {
+		http.Error(w, err.Error(), 500)
+		return
+	}
+	w.Header().Set("content-type", "application/json")
 	w.WriteHeader(http.StatusCreated)
-	fmt.Fprintf(w, "Response: %v\n", res)
+	w.Write(output)
 }

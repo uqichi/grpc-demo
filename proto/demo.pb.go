@@ -65,63 +65,6 @@ func (m *GetUserRequest) GetId() string {
 }
 
 //*
-// Represents get-user response.
-type GetUserResponse struct {
-	Name                 string               `protobuf:"bytes,1,opt,name=name,proto3" json:"name,omitempty"`
-	House                string               `protobuf:"bytes,2,opt,name=house,proto3" json:"house,omitempty"`
-	Created              *timestamp.Timestamp `protobuf:"bytes,3,opt,name=created,proto3" json:"created,omitempty"`
-	XXX_NoUnkeyedLiteral struct{}             `json:"-"`
-	XXX_unrecognized     []byte               `json:"-"`
-	XXX_sizecache        int32                `json:"-"`
-}
-
-func (m *GetUserResponse) Reset()         { *m = GetUserResponse{} }
-func (m *GetUserResponse) String() string { return proto.CompactTextString(m) }
-func (*GetUserResponse) ProtoMessage()    {}
-func (*GetUserResponse) Descriptor() ([]byte, []int) {
-	return fileDescriptor_ca53982754088a9d, []int{1}
-}
-
-func (m *GetUserResponse) XXX_Unmarshal(b []byte) error {
-	return xxx_messageInfo_GetUserResponse.Unmarshal(m, b)
-}
-func (m *GetUserResponse) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
-	return xxx_messageInfo_GetUserResponse.Marshal(b, m, deterministic)
-}
-func (m *GetUserResponse) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_GetUserResponse.Merge(m, src)
-}
-func (m *GetUserResponse) XXX_Size() int {
-	return xxx_messageInfo_GetUserResponse.Size(m)
-}
-func (m *GetUserResponse) XXX_DiscardUnknown() {
-	xxx_messageInfo_GetUserResponse.DiscardUnknown(m)
-}
-
-var xxx_messageInfo_GetUserResponse proto.InternalMessageInfo
-
-func (m *GetUserResponse) GetName() string {
-	if m != nil {
-		return m.Name
-	}
-	return ""
-}
-
-func (m *GetUserResponse) GetHouse() string {
-	if m != nil {
-		return m.House
-	}
-	return ""
-}
-
-func (m *GetUserResponse) GetCreated() *timestamp.Timestamp {
-	if m != nil {
-		return m.Created
-	}
-	return nil
-}
-
-//*
 // Represents create-user request.
 type CreateUserRequest struct {
 	Name                 string   `protobuf:"bytes,1,opt,name=name,proto3" json:"name,omitempty"`
@@ -135,7 +78,7 @@ func (m *CreateUserRequest) Reset()         { *m = CreateUserRequest{} }
 func (m *CreateUserRequest) String() string { return proto.CompactTextString(m) }
 func (*CreateUserRequest) ProtoMessage()    {}
 func (*CreateUserRequest) Descriptor() ([]byte, []int) {
-	return fileDescriptor_ca53982754088a9d, []int{2}
+	return fileDescriptor_ca53982754088a9d, []int{1}
 }
 
 func (m *CreateUserRequest) XXX_Unmarshal(b []byte) error {
@@ -171,56 +114,64 @@ func (m *CreateUserRequest) GetHouse() string {
 }
 
 //*
-// Represents create-user response.
-type CreateUserResponse struct {
+// Represents user response.
+type UserResponse struct {
 	Id                   string               `protobuf:"bytes,1,opt,name=id,proto3" json:"id,omitempty"`
-	House                string               `protobuf:"bytes,2,opt,name=house,proto3" json:"house,omitempty"`
-	Created              *timestamp.Timestamp `protobuf:"bytes,3,opt,name=created,proto3" json:"created,omitempty"`
+	Name                 string               `protobuf:"bytes,2,opt,name=name,proto3" json:"name,omitempty"`
+	House                string               `protobuf:"bytes,3,opt,name=house,proto3" json:"house,omitempty"`
+	Created              *timestamp.Timestamp `protobuf:"bytes,4,opt,name=created,proto3" json:"created,omitempty"`
 	XXX_NoUnkeyedLiteral struct{}             `json:"-"`
 	XXX_unrecognized     []byte               `json:"-"`
 	XXX_sizecache        int32                `json:"-"`
 }
 
-func (m *CreateUserResponse) Reset()         { *m = CreateUserResponse{} }
-func (m *CreateUserResponse) String() string { return proto.CompactTextString(m) }
-func (*CreateUserResponse) ProtoMessage()    {}
-func (*CreateUserResponse) Descriptor() ([]byte, []int) {
-	return fileDescriptor_ca53982754088a9d, []int{3}
+func (m *UserResponse) Reset()         { *m = UserResponse{} }
+func (m *UserResponse) String() string { return proto.CompactTextString(m) }
+func (*UserResponse) ProtoMessage()    {}
+func (*UserResponse) Descriptor() ([]byte, []int) {
+	return fileDescriptor_ca53982754088a9d, []int{2}
 }
 
-func (m *CreateUserResponse) XXX_Unmarshal(b []byte) error {
-	return xxx_messageInfo_CreateUserResponse.Unmarshal(m, b)
+func (m *UserResponse) XXX_Unmarshal(b []byte) error {
+	return xxx_messageInfo_UserResponse.Unmarshal(m, b)
 }
-func (m *CreateUserResponse) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
-	return xxx_messageInfo_CreateUserResponse.Marshal(b, m, deterministic)
+func (m *UserResponse) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	return xxx_messageInfo_UserResponse.Marshal(b, m, deterministic)
 }
-func (m *CreateUserResponse) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_CreateUserResponse.Merge(m, src)
+func (m *UserResponse) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_UserResponse.Merge(m, src)
 }
-func (m *CreateUserResponse) XXX_Size() int {
-	return xxx_messageInfo_CreateUserResponse.Size(m)
+func (m *UserResponse) XXX_Size() int {
+	return xxx_messageInfo_UserResponse.Size(m)
 }
-func (m *CreateUserResponse) XXX_DiscardUnknown() {
-	xxx_messageInfo_CreateUserResponse.DiscardUnknown(m)
+func (m *UserResponse) XXX_DiscardUnknown() {
+	xxx_messageInfo_UserResponse.DiscardUnknown(m)
 }
 
-var xxx_messageInfo_CreateUserResponse proto.InternalMessageInfo
+var xxx_messageInfo_UserResponse proto.InternalMessageInfo
 
-func (m *CreateUserResponse) GetId() string {
+func (m *UserResponse) GetId() string {
 	if m != nil {
 		return m.Id
 	}
 	return ""
 }
 
-func (m *CreateUserResponse) GetHouse() string {
+func (m *UserResponse) GetName() string {
+	if m != nil {
+		return m.Name
+	}
+	return ""
+}
+
+func (m *UserResponse) GetHouse() string {
 	if m != nil {
 		return m.House
 	}
 	return ""
 }
 
-func (m *CreateUserResponse) GetCreated() *timestamp.Timestamp {
+func (m *UserResponse) GetCreated() *timestamp.Timestamp {
 	if m != nil {
 		return m.Created
 	}
@@ -229,31 +180,30 @@ func (m *CreateUserResponse) GetCreated() *timestamp.Timestamp {
 
 func init() {
 	proto.RegisterType((*GetUserRequest)(nil), "proto.GetUserRequest")
-	proto.RegisterType((*GetUserResponse)(nil), "proto.GetUserResponse")
 	proto.RegisterType((*CreateUserRequest)(nil), "proto.CreateUserRequest")
-	proto.RegisterType((*CreateUserResponse)(nil), "proto.CreateUserResponse")
+	proto.RegisterType((*UserResponse)(nil), "proto.UserResponse")
 }
 
 func init() { proto.RegisterFile("demo.proto", fileDescriptor_ca53982754088a9d) }
 
 var fileDescriptor_ca53982754088a9d = []byte{
-	// 252 bytes of a gzipped FileDescriptorProto
-	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0xac, 0x90, 0xbd, 0x4e, 0xc3, 0x30,
-	0x10, 0x80, 0x95, 0x40, 0xa9, 0xb8, 0x4a, 0x45, 0x9c, 0x00, 0x85, 0x2c, 0x44, 0x99, 0x3a, 0xb9,
-	0x52, 0x61, 0x60, 0x61, 0x40, 0x20, 0xb1, 0x07, 0x78, 0x80, 0xb4, 0x3e, 0x8a, 0x25, 0xdc, 0x73,
-	0x6d, 0x87, 0x87, 0xe0, 0xa9, 0x91, 0x6c, 0x07, 0x4a, 0x61, 0x60, 0xe8, 0xe4, 0xfb, 0xf9, 0xce,
-	0xfe, 0x7c, 0x00, 0x92, 0x34, 0x0b, 0x63, 0xd9, 0x33, 0x0e, 0xc2, 0x51, 0x5e, 0x2c, 0x99, 0x97,
-	0x6f, 0x34, 0x0d, 0xd9, 0xbc, 0x7b, 0x99, 0x7a, 0xa5, 0xc9, 0xf9, 0x56, 0x9b, 0xc8, 0xd5, 0x15,
-	0x8c, 0x1f, 0xc8, 0x3f, 0x3b, 0xb2, 0x0d, 0xad, 0x3b, 0x72, 0x1e, 0xc7, 0x90, 0x2b, 0x59, 0x64,
-	0x55, 0x36, 0x39, 0x6c, 0x72, 0x25, 0xeb, 0x35, 0x1c, 0x7d, 0x11, 0xce, 0xf0, 0xca, 0x11, 0x22,
-	0xec, 0xaf, 0x5a, 0x4d, 0x09, 0x0a, 0x31, 0x9e, 0xc0, 0xe0, 0x95, 0x3b, 0x47, 0x45, 0x1e, 0x8a,
-	0x31, 0xc1, 0x2b, 0x18, 0x2e, 0x2c, 0xb5, 0x9e, 0x64, 0xb1, 0x57, 0x65, 0x93, 0xd1, 0xac, 0x14,
-	0xd1, 0x48, 0xf4, 0x46, 0xe2, 0xa9, 0x37, 0x6a, 0x7a, 0xb4, 0xbe, 0x81, 0xe3, 0xbb, 0x10, 0x6e,
-	0x7a, 0xfd, 0xfb, 0xd1, 0xda, 0x00, 0x6e, 0x8e, 0x27, 0xe9, 0xad, 0x7f, 0xed, 0x52, 0x78, 0xf6,
-	0x91, 0xc1, 0xe8, 0x9e, 0x34, 0x3f, 0x92, 0x7d, 0x57, 0x0b, 0xc2, 0x6b, 0x18, 0xa6, 0x9d, 0xe1,
-	0x69, 0x1c, 0x14, 0x3f, 0xb7, 0x5c, 0x9e, 0x6d, 0x97, 0x93, 0xe5, 0x2d, 0xc0, 0xb7, 0x3b, 0x16,
-	0x89, 0xfa, 0xb5, 0x8d, 0xf2, 0xfc, 0x8f, 0x4e, 0xbc, 0x62, 0x7e, 0x10, 0x3a, 0x97, 0x9f, 0x01,
-	0x00, 0x00, 0xff, 0xff, 0xfc, 0xdc, 0xb5, 0x2b, 0x0f, 0x02, 0x00, 0x00,
+	// 242 bytes of a gzipped FileDescriptorProto
+	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0x6c, 0x90, 0x41, 0x4b, 0x03, 0x31,
+	0x10, 0x85, 0xd9, 0xb5, 0xb5, 0x38, 0x95, 0x82, 0xa3, 0x42, 0xd8, 0x8b, 0xcb, 0x9e, 0x7a, 0x4a,
+	0xa1, 0xea, 0x49, 0x3c, 0x29, 0x78, 0x5f, 0xf5, 0x07, 0x6c, 0x9b, 0xb1, 0x06, 0x4c, 0x67, 0x4d,
+	0xb2, 0x1e, 0x05, 0xff, 0xb9, 0x90, 0x64, 0xb5, 0xd5, 0x3d, 0x25, 0x33, 0x7c, 0xef, 0x31, 0xef,
+	0x01, 0x28, 0x32, 0x2c, 0x5b, 0xcb, 0x9e, 0x71, 0x1c, 0x9e, 0xe2, 0x62, 0xc3, 0xbc, 0x79, 0xa3,
+	0x45, 0x98, 0x56, 0xdd, 0xcb, 0xc2, 0x6b, 0x43, 0xce, 0x37, 0xa6, 0x8d, 0x5c, 0x55, 0xc2, 0xec,
+	0x81, 0xfc, 0xb3, 0x23, 0x5b, 0xd3, 0x7b, 0x47, 0xce, 0xe3, 0x0c, 0x72, 0xad, 0x44, 0x56, 0x66,
+	0xf3, 0xa3, 0x3a, 0xd7, 0xaa, 0xba, 0x85, 0x93, 0x3b, 0x4b, 0x8d, 0xa7, 0x5d, 0x08, 0x61, 0xb4,
+	0x6d, 0x0c, 0x25, 0x2c, 0xfc, 0xf1, 0x0c, 0xc6, 0xaf, 0xdc, 0x39, 0x12, 0x79, 0x58, 0xc6, 0xa1,
+	0xfa, 0x84, 0xe3, 0x28, 0x74, 0x2d, 0x6f, 0x1d, 0xfd, 0xb5, 0xff, 0x71, 0xca, 0x87, 0x9c, 0x0e,
+	0x76, 0x9c, 0xf0, 0x0a, 0x26, 0xeb, 0x70, 0x88, 0x12, 0xa3, 0x32, 0x9b, 0x4f, 0x97, 0x85, 0x8c,
+	0xe9, 0x64, 0x9f, 0x4e, 0x3e, 0xf5, 0xe9, 0xea, 0x1e, 0x5d, 0x7e, 0x65, 0x30, 0xbd, 0x27, 0xc3,
+	0x8f, 0x64, 0x3f, 0xf4, 0x9a, 0xf0, 0x1a, 0x26, 0x29, 0x30, 0x9e, 0x47, 0xa1, 0xdc, 0x2f, 0xa0,
+	0x38, 0x4d, 0xeb, 0xbd, 0xb3, 0x6f, 0x00, 0x7e, 0x5b, 0x40, 0x91, 0x90, 0x7f, 0xc5, 0x0c, 0x8a,
+	0x57, 0x87, 0x61, 0x77, 0xf9, 0x1d, 0x00, 0x00, 0xff, 0xff, 0x5e, 0xfb, 0x93, 0x4b, 0xa1, 0x01,
+	0x00, 0x00,
 }
 
 // Reference imports to suppress errors if they are not otherwise used.
@@ -269,9 +219,9 @@ const _ = grpc.SupportPackageIsVersion4
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://godoc.org/google.golang.org/grpc#ClientConn.NewStream.
 type DemoServiceClient interface {
 	// Get user object
-	GetUser(ctx context.Context, in *GetUserRequest, opts ...grpc.CallOption) (*GetUserResponse, error)
+	GetUser(ctx context.Context, in *GetUserRequest, opts ...grpc.CallOption) (*UserResponse, error)
 	// Create user object
-	CreateUser(ctx context.Context, in *CreateUserRequest, opts ...grpc.CallOption) (*CreateUserResponse, error)
+	CreateUser(ctx context.Context, in *CreateUserRequest, opts ...grpc.CallOption) (*UserResponse, error)
 }
 
 type demoServiceClient struct {
@@ -282,8 +232,8 @@ func NewDemoServiceClient(cc *grpc.ClientConn) DemoServiceClient {
 	return &demoServiceClient{cc}
 }
 
-func (c *demoServiceClient) GetUser(ctx context.Context, in *GetUserRequest, opts ...grpc.CallOption) (*GetUserResponse, error) {
-	out := new(GetUserResponse)
+func (c *demoServiceClient) GetUser(ctx context.Context, in *GetUserRequest, opts ...grpc.CallOption) (*UserResponse, error) {
+	out := new(UserResponse)
 	err := c.cc.Invoke(ctx, "/proto.DemoService/GetUser", in, out, opts...)
 	if err != nil {
 		return nil, err
@@ -291,8 +241,8 @@ func (c *demoServiceClient) GetUser(ctx context.Context, in *GetUserRequest, opt
 	return out, nil
 }
 
-func (c *demoServiceClient) CreateUser(ctx context.Context, in *CreateUserRequest, opts ...grpc.CallOption) (*CreateUserResponse, error) {
-	out := new(CreateUserResponse)
+func (c *demoServiceClient) CreateUser(ctx context.Context, in *CreateUserRequest, opts ...grpc.CallOption) (*UserResponse, error) {
+	out := new(UserResponse)
 	err := c.cc.Invoke(ctx, "/proto.DemoService/CreateUser", in, out, opts...)
 	if err != nil {
 		return nil, err
@@ -303,9 +253,9 @@ func (c *demoServiceClient) CreateUser(ctx context.Context, in *CreateUserReques
 // DemoServiceServer is the server API for DemoService service.
 type DemoServiceServer interface {
 	// Get user object
-	GetUser(context.Context, *GetUserRequest) (*GetUserResponse, error)
+	GetUser(context.Context, *GetUserRequest) (*UserResponse, error)
 	// Create user object
-	CreateUser(context.Context, *CreateUserRequest) (*CreateUserResponse, error)
+	CreateUser(context.Context, *CreateUserRequest) (*UserResponse, error)
 }
 
 func RegisterDemoServiceServer(s *grpc.Server, srv DemoServiceServer) {
