@@ -4,23 +4,40 @@ package proto;
 
 import "google/protobuf/timestamp.proto";
 
+/* Sample service for demo use */
 service DemoService {
+    // Get user object
     rpc GetUser(GetUserRequest) returns (GetUserResponse);
+    // Create user object
     rpc CreateUser(CreateUserRequest) returns (CreateUserResponse);
 }
 
+/**
+* Represents get-user request.
+*/
 message GetUserRequest {
-    string id = 1;
+    string id = 1; // User id
 }
 
+/**
+* Represents get-user response.
+*/
 message GetUserResponse {
-    string name = 1;
+    string                    name    = 1; // User name
+    google.protobuf.Timestamp created = 2; // User creation time
 }
 
+/**
+* Represents create-user request.
+*/
 message CreateUserRequest {
-    string name = 1;
+    string name = 1; // User name
 }
 
+/**
+* Represents create-user response.
+*/
 message CreateUserResponse {
-    string id   = 1;
+    string                    id      = 1; // Generated user id
+    google.protobuf.Timestamp created = 2; // User creation time
 }
