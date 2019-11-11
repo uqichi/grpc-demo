@@ -1,4 +1,4 @@
-.PHONY: protoc doc up logs
+.PHONY: protoc doc up logs push-gcr
 
 protoc:
 	protoc -I proto --go_out=plugins=grpc:proto proto/*.proto
@@ -14,3 +14,8 @@ upbuild:
 
 logs:
 	docker-compose logs -f
+
+push-gcr:
+	gcloud auth configure-docker
+	docker tag grpc-demo_grpc-server asia.gcr.io/$${GOOGLE_PROJECT_ID}/grpc-demo-server
+	docker push asia.gcr.io/$${GOOGLE_PROJECT_ID}/grpc-demo-server
