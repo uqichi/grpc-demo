@@ -3,7 +3,7 @@ FROM golang:1.13.3-alpine as builder
 RUN apk update && \
     apk add git gcc g++
 ENV PKG_PATH /go/src/github.com/uqichi/grpc-demo
-ENV APP_PATH $PKG_PATH/server
+ENV APP_PATH $PKG_PATH/client
 ENV GO111MODULE on
 WORKDIR $PKG_PATH
 COPY go.mod .
@@ -17,5 +17,5 @@ RUN GOOS=linux GOARCH=amd64 CGO_ENABLED=0 \
 FROM alpine
 
 ENV TZ Asia/Tokyo
-COPY --from=builder /go/bin/app /demo-server
-ENTRYPOINT ["/demo-server"]
+COPY --from=builder /go/bin/app /demo-client
+ENTRYPOINT ["/demo-client"]
