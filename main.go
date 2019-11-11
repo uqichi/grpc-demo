@@ -1,7 +1,7 @@
 package main
 
-import "uqichi/grpc-demo/server"
+import "uqichi/grpc-demo/client"
 
 func main() {
-	server.Start()
+	client.Start()
 }
