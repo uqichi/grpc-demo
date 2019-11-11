@@ -19,12 +19,15 @@ func Start() {
 	if port == "" {
 		port = defaultPort
 	}
+
+	// gPRC Server
 	lis, err := net.Listen("tcp", fmt.Sprintf(":%s", port))
 	if err != nil {
 		log.Fatalf("failed to listen: %v", err)
 	}
 	grpcServer := grpc.NewServer()
 	proto.RegisterDemoServiceServer(grpcServer, newDemoService())
-	fmt.Printf("Start gRPC Server on :%s\n", port)
+
+	fmt.Printf("start server on :%s\n", port)
 	log.Fatal(grpcServer.Serve(lis))
 }

@@ -24,14 +24,16 @@ message GetUserRequest {
 */
 message GetUserResponse {
     string                    name    = 1; // User name
-    google.protobuf.Timestamp created = 2; // User creation time
+    string                    house   = 2; // Use house
+    google.protobuf.Timestamp created = 3; // User creation time
 }
 
 /**
 * Represents create-user request.
 */
 message CreateUserRequest {
-    string name = 1; // User name
+    string name  = 1; // User name
+    string house = 2; // User house
 }
 
 /**
@@ -39,5 +41,6 @@ message CreateUserRequest {
 */
 message CreateUserResponse {
     string                    id      = 1; // Generated user id
-    google.protobuf.Timestamp created = 2; // User creation time
+    string                    house   = 2; // Use house
+    google.protobuf.Timestamp created = 3; // User creation time
 }
