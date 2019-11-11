@@ -1,0 +1,49 @@
+syntax = "proto3";
+
+package proto;
+
+import "google/protobuf/empty.proto";
+import "google/protobuf/timestamp.proto";
+
+/* Sample service for demo use */
+service DemoService {
+    // Ping
+    rpc Ping(google.protobuf.Empty) returns (Pong);
+    // Get user object
+    rpc GetUser(GetUserRequest) returns (UserResponse);
+    // Create user object
+    rpc CreateUser(CreateUserRequest) returns (UserResponse);
+}
+
+/**
+* Represents ping response.
+*/
+message Pong {
+    string contents = 1; // Pong contents
+}
+
+/**
+* Represents get-user request.
+*/
+message GetUserRequest {
+    string id = 1; // User id
+}
+
+/**
+* Represents create-user request.
+*/
+message CreateUserRequest {
+    string name  = 1; // User name
+    string house = 2; // User house
+}
+
+/**
+* Represents user response.
+*/
+message UserResponse {
+    string                    id      = 1; // User id
+    string                    name    = 2; // User name
+    string                    house   = 3; // Use house
+    google.protobuf.Timestamp created = 4; // User creation time
+    string                    meta    = 5; // User meta
+}
