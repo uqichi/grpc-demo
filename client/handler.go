@@ -17,6 +17,7 @@ type User struct {
 	Name    string    `json:"name"`
 	House   string    `json:"house"`
 	Created time.Time `json:"created"`
+	Meta    string    `json:"meta"`
 }
 
 type handler struct {
@@ -43,6 +44,7 @@ func (h *handler) getUserHandler(w http.ResponseWriter, r *http.Request) {
 		Name:    res.Name,
 		House:   res.House,
 		Created: ts,
+		Meta:    res.Meta,
 	}
 
 	output, err := json.Marshal(user)
@@ -87,6 +89,7 @@ func (h *handler) createUserHandler(w http.ResponseWriter, r *http.Request) {
 	user.ID = res.Id
 	user.House = res.House
 	user.Created = t
+	user.Meta = res.Meta
 
 	output, err := json.Marshal(user)
 	if err != nil {

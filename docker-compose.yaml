@@ -7,6 +7,7 @@ services:
     container_name: grpc-server
     environment:
       - "GRPC_PORT=6666"
+      - "MY_POD_IP=0.0.0.0"
     ports:
       - "6666:6666"
   grpc-client:

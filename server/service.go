@@ -4,6 +4,7 @@ import (
 	"context"
 	"errors"
 	"math/rand"
+	"os"
 	"sync"
 	"time"
 	"uqichi/grpc-demo/proto"
@@ -59,6 +60,7 @@ func (svc demoService) GetUser(ctx context.Context, req *proto.GetUserRequest) (
 		Name:    u.name,
 		House:   string(u.house),
 		Created: ts,
+		Meta:    os.Getenv("MY_POD_IP"),
 	}
 	return res, nil
 }
@@ -88,6 +90,7 @@ func (svc demoService) CreateUser(ctx context.Context, req *proto.CreateUserRequ
 		Name:    u.name,
 		House:   string(u.house),
 		Created: t,
+		Meta:    os.Getenv("MY_POD_IP"),
 	}
 	return res, nil
 }

@@ -35,4 +35,5 @@ message UserResponse {
     string                    name    = 2; // User name
     string                    house   = 3; // Use house
     google.protobuf.Timestamp created = 4; // User creation time
+    string                    meta    = 5; // User meta
 }
