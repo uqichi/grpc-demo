@@ -2,6 +2,7 @@ package main
 
 import (
 	"encoding/json"
+	"fmt"
 	"io/ioutil"
 	"net/http"
 	"time"
@@ -22,6 +23,16 @@ type User struct {
 
 type handler struct {
 	cli proto.DemoServiceClient
+}
+
+func (h *handler) pingHandler(w http.ResponseWriter, r *http.Request) {
+	w.WriteHeader(http.StatusOK)
+	res, err := h.cli.Ping(r.Context(), nil)
+	if err != nil {
+		http.Error(w, err.Error(), 500)
+		return
+	}
+	fmt.Fprintf(w, "Pong: %s", res.Contents)
 }
 
 func (h *handler) getUserHandler(w http.ResponseWriter, r *http.Request) {

@@ -39,7 +39,7 @@ func Start() {
 	h := &handler{cli}
 
 	r := mux.NewRouter()
-	r.HandleFunc("/ping", pingHandler).Methods("GET")
+	r.HandleFunc("/ping", h.pingHandler).Methods("GET")
 	r.HandleFunc("/users/{uid}", h.getUserHandler).Methods("GET")
 	r.HandleFunc("/users", h.createUserHandler).Methods("POST")
 
@@ -49,9 +49,4 @@ func Start() {
 	}
 	fmt.Printf("start client server on :%s\n", port)
 	log.Fatal(s.ListenAndServe())
-}
-
-func pingHandler(w http.ResponseWriter, r *http.Request) {
-	w.WriteHeader(http.StatusOK)
-	fmt.Fprintf(w, "Pong")
 }

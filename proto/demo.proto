@@ -2,14 +2,24 @@ syntax = "proto3";
 
 package proto;
 
+import "google/protobuf/empty.proto";
 import "google/protobuf/timestamp.proto";
 
 /* Sample service for demo use */
 service DemoService {
+    // Ping
+    rpc Ping(google.protobuf.Empty) returns (Pong);
     // Get user object
     rpc GetUser(GetUserRequest) returns (UserResponse);
     // Create user object
     rpc CreateUser(CreateUserRequest) returns (UserResponse);
+}
+
+/**
+* Represents ping response.
+*/
+message Pong {
+    string contents = 1; // Pong contents
 }
 
 /**

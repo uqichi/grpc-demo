@@ -3,11 +3,14 @@ package main
 import (
 	"context"
 	"errors"
+	"fmt"
 	"math/rand"
 	"os"
 	"sync"
 	"time"
 	"uqichi/grpc-demo/proto"
+
+	"github.com/golang/protobuf/ptypes/empty"
 
 	"github.com/google/uuid"
 
@@ -45,7 +48,17 @@ func newDemoService() *demoService {
 	return &demoService{}
 }
 
+func (demoService) Ping(context.Context, *empty.Empty) (*proto.Pong, error) {
+	fmt.Println("ping")
+
+	return &proto.Pong{
+		Contents: os.Getenv("MY_POD_IP"),
+	}, nil
+}
+
 func (svc demoService) GetUser(ctx context.Context, req *proto.GetUserRequest) (*proto.UserResponse, error) {
+	fmt.Println("getUser Id:", req.Id)
+
 	load, ok := mdb.Load(req.Id)
 	if !ok {
 		return nil, errors.New("user not found")
@@ -66,6 +79,8 @@ func (svc demoService) GetUser(ctx context.Context, req *proto.GetUserRequest) (
 }
 
 func (svc demoService) CreateUser(ctx context.Context, req *proto.CreateUserRequest) (*proto.UserResponse, error) {
+	fmt.Println("createUser Name:", req.Name, ",House:", req.House)
+
 	genID := uuid.New()
 	userHouse := randomHouse()
 	if req.House != "" {
