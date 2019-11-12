@@ -4,6 +4,7 @@ import (
 	"context"
 	"errors"
 	"fmt"
+	"log"
 	"math/rand"
 	"os"
 	"sync"
@@ -49,7 +50,7 @@ func newDemoService() *demoService {
 }
 
 func (demoService) Ping(ctx context.Context, req *empty.Empty) (*proto.Pong, error) {
-	fmt.Println("grpc ping")
+	fmt.Println("grpc ping", os.Getenv("MY_POD_IP"))
 
 	return &proto.Pong{
 		Contents: fmt.Sprintf("podip - %s", os.Getenv("MY_POD_IP")),
@@ -75,6 +76,29 @@ func (svc demoService) GetUser(ctx context.Context, req *proto.GetUserRequest) (
 		Created: ts,
 		Meta:    os.Getenv("MY_POD_IP"),
 	}
+	return res, nil
+}
+
+func (svc demoService) ListUsers(ctx context.Context, req *proto.ListUsersRequest) (*proto.UsersResponse, error) {
+	fmt.Println("listUsers Filter:", req.Filter)
+
+	res := &proto.UsersResponse{}
+	mdb.Range(func(k, v interface{}) bool {
+		u := v.(*user)
+		ts, err := ptypes.TimestampProto(u.created)
+		if err != nil {
+			log.Println(err)
+		}
+		res.List = append(res.List, &proto.UserResponse{
+			Id:      u.id,
+			Name:    u.name,
+			House:   string(u.house),
+			Created: ts,
+			Meta:    os.Getenv("MY_POD_IP"),
+		})
+		return true
+	})
+
 	return res, nil
 }
 

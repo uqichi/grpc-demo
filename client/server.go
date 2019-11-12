@@ -47,6 +47,7 @@ func Start() {
 	r.HandleFunc("/httpping", h.httpPingHandler).Methods("GET")
 	r.HandleFunc("/grpcping", h.grpcPingHandler).Methods("GET")
 	r.HandleFunc("/users/{uid}", h.getUserHandler).Methods("GET")
+	r.HandleFunc("/users", h.listUsersHandler).Methods("GET")
 	r.HandleFunc("/users", h.createUserHandler).Methods("POST")
 
 	s := &http.Server{

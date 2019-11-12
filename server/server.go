@@ -42,7 +42,7 @@ func StartHTTP() {
 
 	// http Server
 	http.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
-		fmt.Println("grpc ping")
+		fmt.Println("http ping", os.Getenv("MY_POD_IP"))
 		fmt.Fprintf(w, "podip - %s", os.Getenv("MY_POD_IP"))
 	})
 	log.Fatal(http.ListenAndServe(fmt.Sprintf(":%s", port), nil))

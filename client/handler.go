@@ -86,6 +86,37 @@ func (h *handler) getUserHandler(w http.ResponseWriter, r *http.Request) {
 	w.Write(output)
 }
 
+func (h *handler) listUsersHandler(w http.ResponseWriter, r *http.Request) {
+	res, err := h.cli.ListUsers(r.Context(), &proto.ListUsersRequest{})
+	if err != nil {
+		http.Error(w, err.Error(), 500)
+		return
+	}
+
+	users := make([]User, 0, len(res.List))
+	for _, v := range res.List {
+		ts, err := ptypes.Timestamp(v.Created)
+		if err != nil {
+			http.Error(w, err.Error(), 500)
+		}
+		users = append(users, User{
+			ID:      v.Id,
+			Name:    v.Name,
+			House:   v.House,
+			Created: ts,
+			Meta:    v.Meta,
+		})
+	}
+
+	output, err := json.Marshal(users)
+	if err != nil {
+		http.Error(w, err.Error(), 500)
+		return
+	}
+	w.Header().Set("content-type", "application/json")
+	w.Write(output)
+}
+
 func (h *handler) createUserHandler(w http.ResponseWriter, r *http.Request) {
 	b, err := ioutil.ReadAll(r.Body)
 	defer r.Body.Close()
