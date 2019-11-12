@@ -49,7 +49,7 @@ func newDemoService() *demoService {
 }
 
 func (demoService) Ping(ctx context.Context, req *empty.Empty) (*proto.Pong, error) {
-	fmt.Println("ping")
+	fmt.Println("grpc ping")
 
 	return &proto.Pong{
 		Contents: fmt.Sprintf("podip - %s", os.Getenv("MY_POD_IP")),
