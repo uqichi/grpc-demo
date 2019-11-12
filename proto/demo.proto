@@ -11,6 +11,8 @@ service DemoService {
     rpc Ping(google.protobuf.Empty) returns (Pong);
     // Get user object
     rpc GetUser(GetUserRequest) returns (UserResponse);
+    // List user objects
+    rpc ListUsers(ListUsersRequest) returns (UsersResponse);
     // Create user object
     rpc CreateUser(CreateUserRequest) returns (UserResponse);
 }
@@ -30,6 +32,13 @@ message GetUserRequest {
 }
 
 /**
+* Represents list-users request.
+*/
+message ListUsersRequest {
+    string filter = 1; // Users search filter
+}
+
+/**
 * Represents create-user request.
 */
 message CreateUserRequest {
@@ -46,4 +55,11 @@ message UserResponse {
     string                    house   = 3; // Use house
     google.protobuf.Timestamp created = 4; // User creation time
     string                    meta    = 5; // User meta
+}
+
+/**
+* Represents multiple users response.
+*/
+message UsersResponse {
+    repeated UserResponse list = 1; // User objects
 }
