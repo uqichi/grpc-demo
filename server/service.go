@@ -48,7 +48,7 @@ func newDemoService() *demoService {
 	return &demoService{}
 }
 
-func (demoService) Ping(context.Context, *empty.Empty) (*proto.Pong, error) {
+func (demoService) Ping(ctx context.Context, req *empty.Empty) (*proto.Pong, error) {
 	fmt.Println("ping")
 
 	return &proto.Pong{

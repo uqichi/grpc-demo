@@ -8,6 +8,8 @@ import (
 	"time"
 	"uqichi/grpc-demo/proto"
 
+	"github.com/golang/protobuf/ptypes/empty"
+
 	"github.com/golang/protobuf/ptypes"
 
 	"github.com/gorilla/mux"
@@ -27,7 +29,7 @@ type handler struct {
 
 func (h *handler) pingHandler(w http.ResponseWriter, r *http.Request) {
 	w.WriteHeader(http.StatusOK)
-	res, err := h.cli.Ping(r.Context(), nil)
+	res, err := h.cli.Ping(r.Context(), &empty.Empty{})
 	if err != nil {
 		http.Error(w, err.Error(), 500)
 		return
