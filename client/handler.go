@@ -24,17 +24,34 @@ type User struct {
 }
 
 type handler struct {
-	cli proto.DemoServiceClient
+	cli      proto.DemoServiceClient
+	httpHost string
 }
 
-func (h *handler) pingHandler(w http.ResponseWriter, r *http.Request) {
+func (h *handler) httpPingHandler(w http.ResponseWriter, r *http.Request) {
+	res, err := http.Get(h.httpHost)
+	if err != nil {
+		http.Error(w, err.Error(), 500)
+		return
+	}
+	defer res.Body.Close()
+	body, error := ioutil.ReadAll(res.Body)
+	if error != nil {
+		http.Error(w, err.Error(), 500)
+		return
+	}
 	w.WriteHeader(http.StatusOK)
+	fmt.Fprintf(w, "HTTP Pong: %s", string(body))
+}
+
+func (h *handler) grpcPingHandler(w http.ResponseWriter, r *http.Request) {
 	res, err := h.cli.Ping(r.Context(), &empty.Empty{})
 	if err != nil {
 		http.Error(w, err.Error(), 500)
 		return
 	}
-	fmt.Fprintf(w, "Pong: %s", res.Contents)
+	w.WriteHeader(http.StatusOK)
+	fmt.Fprintf(w, "gRPC Pong: %s", res.Contents)
 }
 
 func (h *handler) getUserHandler(w http.ResponseWriter, r *http.Request) {

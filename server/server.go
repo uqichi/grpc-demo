@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"log"
 	"net"
+	"net/http"
 	"os"
 	"uqichi/grpc-demo/proto"
 
@@ -11,13 +12,14 @@ import (
 )
 
 const (
-	defaultPort = "5555"
+	defaultGRPCPort = "5555"
+	defaultHTTPPort = "8000"
 )
 
-func Start() {
+func StartGRPC() {
 	port := os.Getenv("GRPC_PORT")
 	if port == "" {
-		port = defaultPort
+		port = defaultGRPCPort
 	}
 
 	// gPRC Server
@@ -30,4 +32,17 @@ func Start() {
 
 	fmt.Printf("start server on :%s\n", port)
 	log.Fatal(grpcServer.Serve(lis))
+}
+
+func StartHTTP() {
+	port := os.Getenv("HTTP_PORT")
+	if port == "" {
+		port = defaultHTTPPort
+	}
+
+	// http Server
+	http.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
+		fmt.Fprintf(w, "podip - %s", os.Getenv("MY_POD_IP"))
+	})
+	log.Fatal(http.ListenAndServe(fmt.Sprintf(":%s", port), nil))
 }

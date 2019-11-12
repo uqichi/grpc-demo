@@ -13,8 +13,9 @@ import (
 )
 
 const (
-	defaultPort     = "8888"
-	defaultHostAddr = "localhost:5555"
+	defaultPort         = "8888"
+	defaultGRPCHostAddr = "localhost:5555"
+	defaultHTTPHostAddr = "localhost:8000"
 )
 
 func Start() {
@@ -22,13 +23,17 @@ func Start() {
 	if port == "" {
 		port = defaultPort
 	}
-	hostAddr := os.Getenv("GRPC_HOST_ADDR")
-	if hostAddr == "" {
-		hostAddr = defaultHostAddr
+	gRPCHost := os.Getenv("GRPC_HOST_ADDR")
+	if gRPCHost == "" {
+		gRPCHost = defaultGRPCHostAddr
+	}
+	httpHost := os.Getenv("HTTP_HOST_ADDR")
+	if httpHost == "" {
+		httpHost = defaultHTTPHostAddr
 	}
 
 	// gRPC Client
-	conn, err := grpc.Dial(hostAddr, grpc.WithInsecure())
+	conn, err := grpc.Dial(gRPCHost, grpc.WithInsecure())
 	if err != nil {
 		log.Fatalf("fail to dial: %v", err)
 	}
@@ -36,10 +41,11 @@ func Start() {
 	fmt.Println(conn.GetState())
 	cli := proto.NewDemoServiceClient(conn)
 
-	h := &handler{cli}
+	h := &handler{cli, httpHost}
 
 	r := mux.NewRouter()
-	r.HandleFunc("/ping", h.pingHandler).Methods("GET")
+	r.HandleFunc("/httpping", h.httpPingHandler).Methods("GET")
+	r.HandleFunc("/grpcping", h.grpcPingHandler).Methods("GET")
 	r.HandleFunc("/users/{uid}", h.getUserHandler).Methods("GET")
 	r.HandleFunc("/users", h.createUserHandler).Methods("POST")
 

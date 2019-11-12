@@ -52,7 +52,7 @@ func (demoService) Ping(ctx context.Context, req *empty.Empty) (*proto.Pong, err
 	fmt.Println("ping")
 
 	return &proto.Pong{
-		Contents: os.Getenv("MY_POD_IP"),
+		Contents: fmt.Sprintf("podip - %s", os.Getenv("MY_POD_IP")),
 	}, nil
 }
 
