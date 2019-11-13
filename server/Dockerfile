@@ -18,4 +18,6 @@ FROM alpine
 
 ENV TZ Asia/Tokyo
 COPY --from=builder /go/bin/app /demo-server
+COPY --from=builder /go/src/github.com/uqichi/grpc-demo/tls/service.key /tls/service.key
+COPY --from=builder /go/src/github.com/uqichi/grpc-demo/tls/service.pem /tls/service.pem
 ENTRYPOINT ["/demo-server"]
