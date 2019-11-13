@@ -30,7 +30,7 @@ func StartGRPC() {
 	grpcServer := grpc.NewServer()
 	proto.RegisterDemoServiceServer(grpcServer, newDemoService())
 
-	fmt.Printf("start server on :%s\n", port)
+	fmt.Printf("start grpc server on :%s\n", port)
 	log.Fatal(grpcServer.Serve(lis))
 }
 
@@ -45,5 +45,6 @@ func StartHTTP() {
 		fmt.Println("http ping", os.Getenv("MY_POD_IP"))
 		fmt.Fprintf(w, "podip - %s", os.Getenv("MY_POD_IP"))
 	})
+	fmt.Printf("start http server on :%s\n", port)
 	log.Fatal(http.ListenAndServe(fmt.Sprintf(":%s", port), nil))
 }
