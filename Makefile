@@ -18,9 +18,9 @@ logs:
 push-server:
 	gcloud auth configure-docker
 	docker tag grpc-demo_grpc-server asia.gcr.io/$${GOOGLE_PROJECT_ID}/grpc-demo-server:latest
-	docker push asia.gcr.io/$${GOOGLE_PROJECT_ID}/grpc-demo-server:latest
+	docker push asia.gcr.io/$${GOOGLE_PROJECT_ID}/grpc-demo-server:tls
 
 push-client:
 	gcloud auth configure-docker
 	docker tag grpc-demo_grpc-client asia.gcr.io/$${GOOGLE_PROJECT_ID}/grpc-demo-client:latest
-	docker push asia.gcr.io/$${GOOGLE_PROJECT_ID}/grpc-demo-client:latest
+	docker push asia.gcr.io/$${GOOGLE_PROJECT_ID}/grpc-demo-client:tls
