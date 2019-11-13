@@ -42,8 +42,9 @@ func StartHTTP() {
 
 	// http Server
 	http.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
-		fmt.Println("http ping", os.Getenv("MY_POD_IP"))
-		fmt.Fprintf(w, "podip - %s", os.Getenv("MY_POD_IP"))
+		fmt.Println("http ping", os.Getenv("MY_POD_IP"), r.RemoteAddr)
+		fmt.Println(r.Header.Get("X-Forwarded-For"))
+		fmt.Fprintf(w, "podip - %s, remoteAddr - %s", os.Getenv("MY_POD_IP"), r.RemoteAddr)
 	})
 	fmt.Printf("start http server on :%s\n", port)
 	log.Fatal(http.ListenAndServe(fmt.Sprintf(":%s", port), nil))
