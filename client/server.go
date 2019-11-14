@@ -34,7 +34,7 @@ func Start() {
 	}
 
 	// gRPC Client
-	creds, err := credentials.NewClientTLSFromFile("/tls/ca.crt", "localhost")
+	creds, err := credentials.NewClientTLSFromFile("/tls/ca.crt", "test.jp")
 	if err != nil {
 		log.Fatalf("failed to load credentials: %v", err)
 	}
