@@ -18,4 +18,5 @@ FROM alpine
 
 ENV TZ Asia/Tokyo
 COPY --from=builder /go/bin/app /demo-client
+COPY --from=builder /go/src/github.com/uqichi/grpc-demo/tls/ca.crt /tls/ca.crt
 ENTRYPOINT ["/demo-client"]

@@ -2,6 +2,7 @@ package main
 
 import (
 	"fmt"
+	"google.golang.org/grpc/credentials"
 	"log"
 	"net/http"
 	"os"
@@ -33,7 +34,11 @@ func Start() {
 	}
 
 	// gRPC Client
-	conn, err := grpc.Dial(gRPCHost, grpc.WithInsecure())
+	creds, err := credentials.NewClientTLSFromFile("/tls/ca.crt", "test.jp")
+	if err != nil {
+		log.Fatalf("failed to load credentials: %v", err)
+	}
+	conn, err := grpc.Dial(gRPCHost, grpc.WithTransportCredentials(creds), grpc.WithBlock())
 	if err != nil {
 		log.Fatalf("fail to dial: %v", err)
 	}

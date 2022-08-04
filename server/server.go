@@ -2,6 +2,7 @@ package main
 
 import (
 	"fmt"
+	"google.golang.org/grpc/credentials"
 	"log"
 	"net"
 	"net/http"
@@ -22,12 +23,17 @@ func StartGRPC() {
 		port = defaultGRPCPort
 	}
 
+	creds, err := credentials.NewServerTLSFromFile("/tls/service.pem", "/tls/service.key")
+	if err != nil {
+		log.Fatalf("failed to create credentials: %v", err)
+	}
+
 	// gPRC Server
 	lis, err := net.Listen("tcp", fmt.Sprintf(":%s", port))
 	if err != nil {
 		log.Fatalf("failed to listen: %v", err)
 	}
-	grpcServer := grpc.NewServer()
+	grpcServer := grpc.NewServer(grpc.Creds(creds))
 	proto.RegisterDemoServiceServer(grpcServer, newDemoService())
 
 	fmt.Printf("start grpc server on :%s\n", port)
